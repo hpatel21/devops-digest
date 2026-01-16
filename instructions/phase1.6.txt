@@ -1,0 +1,17 @@
+Let's add some polish:
+
+1. Add a summary at the end showing:
+   - Total execution time
+   - APIs called
+   - Any errors encountered
+
+2. Add colors to terminal output using click.secho
+
+3. Create a simple test that verifies the GitHub token has the right permissions
+
+4. Update the README with:
+   - Installation instructions
+   - Usage examples
+   - Sample output screenshot (in text)
+
+5. Test the full workflow end-to-end and generate a sample report

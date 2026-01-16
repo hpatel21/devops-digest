@@ -1,0 +1,13 @@
+Add failed build tracking:
+
+1. Create a function `get_failed_builds()` that:
+   - Gets all repositories I have access to
+   - For each repo, check GitHub Actions runs from last 12 hours
+   - Filter for: conclusion == "failure" (exclude cancelled)
+   - Collect: repo name, workflow name, branch, failure time, run URL
+
+2. Add a `--builds` flag to display failed builds
+
+3. Show timestamp in relative format (e.g., "2 hours ago")
+
+Test it after implementation.

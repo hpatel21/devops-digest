@@ -1,0 +1,15 @@
+Add stale branch detection:
+
+1. Create function `get_stale_branches()` that:
+   - Gets all my repositories
+   - For each repo, list all branches
+   - Exclude: main, master, develop, production
+   - Check last commit date on each branch
+   - Flag branches older than 30 days
+   - Collect: repo name, branch name, age, last commit author
+
+2. Add a `--stale` flag to display stale branches
+
+3. Sort by age (oldest first)
+
+Test it after implementation.

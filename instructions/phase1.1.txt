@@ -1,0 +1,25 @@
+I want to build a CLI tool called "devops-digest" that generates daily reports. Here's what I need:
+
+PROJECT STRUCTURE:
+- Create a new Python project with proper structure
+- Use `click` for CLI framework
+- Use `requests` for API calls
+- Use environment variables for GitHub token
+
+INITIAL FILES NEEDED:
+1. devops-digest.py - main entry point
+2. requirements.txt - dependencies
+3. .gitignore - standard Python gitignore
+4. README.md - basic usage instructions
+5. reports/ - directory for generated reports
+
+FIRST FEATURE - GitHub PR Tracker:
+Create a function that:
+1. Reads GITHUB_TOKEN from environment
+2. Gets my GitHub username from the token
+3. Queries GitHub API for all open PRs where I'm involved (author, reviewer, or mentioned)
+4. Returns structured data with: repo name, PR title, PR number, age in days, URL
+
+Keep it simple for now - just focus on getting the GitHub API integration working correctly.
+
+Start by creating the project structure and the basic CLI skeleton with a --test flag that verifies the GitHub token works.

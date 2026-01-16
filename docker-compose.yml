@@ -1,0 +1,7 @@
+services:
+  devops-digest:
+    build: .
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    volumes:
+      - ./reports:/app/reports

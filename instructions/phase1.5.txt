@@ -1,0 +1,18 @@
+Now tie it all together with report generation:
+
+1. Create function `generate_report()` that:
+   - Calls all three functions (PRs, builds, stale branches)
+   - Formats everything into a markdown file
+   - Uses template from the PRD above
+   - Includes summary stats at the top
+   - Saves to ./reports/devops-digest-YYYY-MM-DD.md
+
+2. Make the default command (no flags) generate and save the full report
+
+3. Add a `--view` flag that also opens the report in the default markdown viewer
+
+4. Add proper error handling for API failures
+
+5. Show a progress indicator while fetching data
+
+Run it and show me the generated report!

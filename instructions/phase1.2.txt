@@ -1,0 +1,19 @@
+Implement the full PR tracking feature:
+
+1. Create a function `get_my_pull_requests()` that:
+   - Searches for PRs where I'm the author: `author:USERNAME is:open is:pr`
+   - Searches for PRs I'm reviewing: `review-requested:USERNAME is:open is:pr`
+   - Searches for PRs where I'm mentioned: `mentions:USERNAME is:open is:pr`
+   - Combines results and removes duplicates
+   - Calculates age in days from creation date
+   - Groups them into: "My PRs", "Reviewing", "Mentioned"
+
+2. Add a `--prs` flag that displays the results in a nice formatted way in the terminal
+
+3. Make sure each PR shows:
+   - Repository name
+   - PR title and number
+   - Age in days
+   - Clickable URL
+
+Test it after you're done so I can see the output.
