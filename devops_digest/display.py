@@ -43,23 +43,23 @@ def display_prs(grouped_prs):
             click.secho(f"  {pr['url']}", fg="bright_black")
 
 
-def display_failed_builds(builds):
-    """Display failed builds in a formatted way in the terminal."""
-    if not builds:
-        click.echo("No failed builds in the last 12 hours.")
+def display_failed_actions(actions):
+    """Display failed GitHub Actions in a formatted way in the terminal."""
+    if not actions:
+        click.echo("No failed actions in the last 12 hours.")
         return
 
     click.echo()
     click.secho(f"{'─' * 60}", fg="bright_black")
-    click.secho(f" Failed Builds ({len(builds)})", fg="red", bold=True)
+    click.secho(f" Failed Actions ({len(actions)})", fg="red", bold=True)
     click.secho(f"{'─' * 60}", fg="bright_black")
 
-    for build in builds:
+    for action in actions:
         click.echo()
-        click.secho(f"  {build['repo_name']}", fg="bright_blue")
-        click.echo(f"  {build['workflow_name']} on {build['branch']}")
-        click.secho(f"  Failed: {relative_time(build['failed_at'])}", fg="red")
-        click.secho(f"  {build['url']}", fg="bright_black")
+        click.secho(f"  {action['repo_name']}", fg="bright_blue")
+        click.echo(f"  {action['workflow_name']} on {action['branch']}")
+        click.secho(f"  Failed: {relative_time(action['failed_at'])}", fg="red")
+        click.secho(f"  {action['url']}", fg="bright_black")
 
 
 def display_stale_branches(branches):

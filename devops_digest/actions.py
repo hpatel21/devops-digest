@@ -1,4 +1,4 @@
-"""Build related functions for DevOps Digest."""
+"""GitHub Actions related functions for DevOps Digest."""
 
 from datetime import datetime, timedelta, timezone
 
@@ -7,7 +7,7 @@ import requests
 from .config import GITHUB_API_BASE
 
 
-def get_failed_builds(token, repo_names):
+def get_failed_actions(token, repo_names):
     """
     Get failed GitHub Actions runs from the last 12 hours.
 
@@ -22,7 +22,7 @@ def get_failed_builds(token, repo_names):
         "Accept": "application/vnd.github.v3+json",
     }
 
-    failed_builds = []
+    failed_actions = []
     cutoff_time = datetime.now(timezone.utc) - timedelta(hours=12)
 
     for repo_name in repo_names:
@@ -46,7 +46,7 @@ def get_failed_builds(token, repo_names):
                 if run_time < cutoff_time:
                     continue
 
-                failed_builds.append({
+                failed_actions.append({
                     "repo_name": repo_name,
                     "workflow_name": run["name"],
                     "branch": run["head_branch"],
@@ -58,6 +58,6 @@ def get_failed_builds(token, repo_names):
             continue
 
     # Sort by failure time (most recent first)
-    failed_builds.sort(key=lambda x: x["failed_at"], reverse=True)
+    failed_actions.sort(key=lambda x: x["failed_at"], reverse=True)
 
-    return failed_builds
+    return failed_actions

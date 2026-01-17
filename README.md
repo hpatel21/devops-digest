@@ -5,10 +5,10 @@ A CLI tool for generating daily development reports from GitHub. Track your pull
 ## Features
 
 - **Pull Request Tracking** - View all open PRs where you're involved (authored, reviewing, or mentioned)
-- **Failed Build Monitoring** - Check for failed GitHub Actions workflow runs in the last 12 hours
+- **Failed Action Monitoring** - Check for failed GitHub Actions workflow runs in the last 12 hours
 - **Stale Branch Detection** - Identify branches older than 30 days that you've authored
 - **Markdown Reports** - Generate comprehensive reports saved to `reports/` directory
-- **Team-based Configuration** - Configure repositories by team for build monitoring
+- **Team-based Configuration** - Configure repositories by team for action monitoring
 - **Docker Support** - Run in containers for consistent environments
 
 ## Installation
@@ -41,7 +41,7 @@ Configure repositories and teams in `conf/data.json`:
 ```
 
 - **repositories** - Repositories to check for stale branches (matched by name pattern)
-- **teams** - GitHub teams whose repositories are checked for failed builds
+- **teams** - GitHub teams whose repositories are checked for failed actions
 
 ## Usage
 
@@ -52,9 +52,9 @@ python devops-digest.py
 ```
 
 The report is saved to `reports/devops-digest-YYYY-MM-DD.md` and includes:
-- Summary table with PR count, failed builds, and stale branches
+- Summary table with PR count, failed actions, and stale branches
 - Grouped pull requests (My PRs, Reviewing, Mentioned)
-- Failed builds from the last 12 hours
+- Failed actions from the last 12 hours
 - Stale branches older than 30 days
 
 ### Generate and View Report
@@ -75,10 +75,10 @@ Show all open PRs where you're involved:
 python devops-digest.py --prs
 ```
 
-### View Failed Builds Only
-Show failed GitHub Actions builds from the last 12 hours:
+### View Failed Actions Only
+Show failed GitHub Actions from the last 12 hours:
 ```bash
-python devops-digest.py --builds
+python devops-digest.py --actions
 ```
 
 ### View Stale Branches Only
@@ -110,7 +110,7 @@ docker-compose run devops-digest
 ### Run specific commands in Docker
 ```bash
 docker-compose run devops-digest --prs
-docker-compose run devops-digest --builds
+docker-compose run devops-digest --actions
 docker-compose run devops-digest --stale
 ```
 
@@ -122,8 +122,8 @@ devops-digest/
 ├── conf/
 │   └── data.json          # Repository and team configuration
 ├── devops_digest/
+│   ├── actions.py         # Failed action monitoring
 │   ├── branches.py        # Stale branch detection
-│   ├── builds.py          # Failed build monitoring
 │   ├── config.py          # Configuration constants
 │   ├── display.py         # Terminal output formatting
 │   ├── github_api.py      # GitHub API utilities

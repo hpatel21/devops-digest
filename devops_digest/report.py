@@ -9,7 +9,7 @@ import click
 import requests
 
 from .prs import get_my_pull_requests
-from .builds import get_failed_builds
+from .actions import get_failed_actions
 from .branches import get_stale_branches
 from .utils import relative_time
 
@@ -22,15 +22,15 @@ def generate_report(token, username, repo_names, team_repo_names=None, debug=Fal
         token: GitHub token
         username: GitHub username
         repo_names: List of full repo names to check for stale branches
-        team_repo_names: List of full repo names from teams for failed builds (optional, falls back to repo_names)
+        team_repo_names: List of full repo names from teams for failed actions (optional, falls back to repo_names)
         debug: Enable debug output
 
     Returns a tuple of (report_content, errors) where errors is a list of error messages
     """
     errors = []
 
-    # Use team repos for builds if provided, otherwise fall back to repo_names
-    build_repo_names = team_repo_names if team_repo_names else repo_names
+    # Use team repos for actions if provided, otherwise fall back to repo_names
+    action_repo_names = team_repo_names if team_repo_names else repo_names
 
     # Fetch PRs
     click.echo("  Fetching pull requests...", nl=False)
@@ -42,14 +42,14 @@ def generate_report(token, username, repo_names, team_repo_names=None, debug=Fal
         errors.append(f"Failed to fetch PRs: {e}")
         click.secho(" ✗", fg="red")
 
-    # Fetch failed builds
-    click.echo("  Fetching failed builds...", nl=False)
+    # Fetch failed actions
+    click.echo("  Fetching failed actions...", nl=False)
     try:
-        failed_builds = get_failed_builds(token, build_repo_names)
+        failed_actions = get_failed_actions(token, action_repo_names)
         click.secho(" ✓", fg="green")
     except requests.exceptions.RequestException as e:
-        failed_builds = []
-        errors.append(f"Failed to fetch builds: {e}")
+        failed_actions = []
+        errors.append(f"Failed to fetch actions: {e}")
         click.secho(" ✗", fg="red")
 
     # Fetch stale branches
@@ -81,7 +81,7 @@ def generate_report(token, username, repo_names, team_repo_names=None, debug=Fal
         f"| Metric | Count |",
         f"|--------|-------|",
         f"| Open PRs | {total_prs} |",
-        f"| Failed Builds (12h) | {len(failed_builds)} |",
+        f"| Failed Actions (12h) | {len(failed_actions)} |",
         f"| Stale Branches (30d+) | {len(stale_branches)} |",
         "",
     ]
@@ -124,19 +124,19 @@ def generate_report(token, username, repo_names, team_repo_names=None, debug=Fal
                 report_lines.append(f"| {pr['repo_name']} | [#{pr['number']} {pr['title']}]({pr['url']}) | {pr['age_days']} days |")
             report_lines.append("")
 
-    # Failed Builds Section
-    report_lines.append("## Failed Builds (Last 12 Hours)")
+    # Failed Actions Section
+    report_lines.append("## Failed Actions (Last 12 Hours)")
     report_lines.append("")
 
-    if not failed_builds:
-        report_lines.append("*No failed builds in the last 12 hours.* 🎉")
+    if not failed_actions:
+        report_lines.append("*No failed actions in the last 12 hours.* 🎉")
         report_lines.append("")
     else:
         report_lines.append("| Repository | Workflow | Branch | Failed |")
         report_lines.append("|------------|----------|--------|--------|")
-        for build in failed_builds:
-            failed_time = relative_time(build["failed_at"])
-            report_lines.append(f"| {build['repo_name']} | [{build['workflow_name']}]({build['url']}) | {build['branch']} | {failed_time} |")
+        for action in failed_actions:
+            failed_time = relative_time(action["failed_at"])
+            report_lines.append(f"| {action['repo_name']} | [{action['workflow_name']}]({action['url']}) | {action['branch']} | {failed_time} |")
         report_lines.append("")
 
     # Stale Branches Section
