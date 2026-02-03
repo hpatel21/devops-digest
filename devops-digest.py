@@ -132,6 +132,16 @@ def main(test, prs, actions, stale, view, debug):
                 click.echo()
                 click.secho(f"⚠️  {len(errors)} error(s) occurred during generation", fg="yellow")
 
+            # Print report to stdout
+            click.echo()
+            click.secho("═" * 80, fg="cyan")
+            click.secho("REPORT CONTENT", fg="cyan", bold=True)
+            click.secho("═" * 80, fg="cyan")
+            click.echo()
+            click.echo(report_content)
+            click.echo()
+            click.secho("═" * 80, fg="cyan")
+
             if view:
                 click.echo()
                 click.echo("Opening report in default viewer...")
